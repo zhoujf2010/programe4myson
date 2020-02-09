@@ -1,0 +1,28 @@
+<category name="Minecraft" colour="120">
+  <category name="General" colour="270">
+    <block type="mcimport"></block>
+    <block type="import_block"></block>
+    <block type="mcpiblockas"></block>
+    <block type="mccreate"></block>
+  </category>
+  <category name="Commands" colour="120">
+    <block type="mcpost"></block>
+    <block type="mcpos"></block>
+    <block type="setpos"></block>
+    <block type="campos"></block>
+    <block type="getblock"></block>
+    <block type="cameraset"></block>
+    <block type="setblock"></block>
+    <block type="mcvar"></block>
+    <block type="mctext"></block>
+    <block type="mcblocks"></block>
+    <block type="build"></block>
+    <block type="printwall"></block>
+    <block type="mctext2"></block>
+    <block type="mctext5"></block>
+    <block type="mcblocks8"></block>
+
+    <block type="return"></block>
+    <block type="getdist"></block>
+  </category>
+</category>

@@ -1,0 +1,8 @@
+<category name="BitIO" colour="290">
+    <block type="importmb"></block>
+    <block type="displayscrolltext"></block>
+    <block type="displayscrollvar"></block>
+    <block type="microsleep"></block>
+    <block type="displayshow"></block>
+    <block type="displayclear"></block>
+</category>  

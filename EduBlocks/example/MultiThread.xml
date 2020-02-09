@@ -1,0 +1,159 @@
+﻿<xml xmlns="http://www.w3.org/1999/xhtml">
+  <variables>
+    <variable type="" id="!}/pqY^iO@HisGD,#mQ.">name</variable>
+    <variable type="" id=",bv#*h3{0`k-u_8A#gq;">delay</variable>
+    <variable type="" id="T3S0v}$5sdk0Qs*kfhvs">count</variable>
+  </variables>
+  <block type="procedures_defnoreturn" id="2K~;/5i^r~TtLyi}k_NG" x="43" y="32">
+    <mutation>
+      <arg name="name" varid="!}/pqY^iO@HisGD,#mQ."></arg>
+      <arg name="delay" varid=",bv#*h3{0`k-u_8A#gq;"></arg>
+    </mutation>
+    <field name="NAME">xxxx</field>
+    <comment pinned="false" h="80" w="160">描述该功能...</comment>
+    <statement name="STACK">
+      <block type="variables_set" id="6Uz-QwJ*A0-`J-:jBbNk">
+        <field name="VAR" id="T3S0v}$5sdk0Qs*kfhvs" variabletype="">count</field>
+        <value name="VALUE">
+          <block type="const_value" id="9_[[fXT@MMUxk-c-,uqk">
+            <field name="var">0</field>
+          </block>
+        </value>
+        <next>
+          <block type="whileout" id="c69)vcF_^8`)tnp-L(,%">
+            <value name="var">
+              <block type="logic_compare" id="eI*8,!ocC[I[G*,EK)*{">
+                <field name="crocsigns">&lt;</field>
+                <value name="A">
+                  <block type="variables_get" id="_v}VmgV|L$5@wAw_@eEH">
+                    <field name="VAR" id="T3S0v}$5sdk0Qs*kfhvs" variabletype="">count</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="const_value" id="jI]Jn6:xLK,|G7uHr}Wk">
+                    <field name="var">5</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="sleep" id="sr?Ly@xX;^i;1BJrL{~I">
+                <value name="sleepTime">
+                  <block type="variables_get" id="AN9GeE{ql],mag!BL:9q">
+                    <field name="VAR" id=",bv#*h3{0`k-u_8A#gq;" variabletype="">delay</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="HS5bF-ASG-C/ZaF,D`gO">
+                    <field name="VAR" id="T3S0v}$5sdk0Qs*kfhvs" variabletype="">count</field>
+                    <value name="VALUE">
+                      <block type="math_arithmetic" id="M;tG.mx0*LY1(:naa/hb">
+                        <field name="crocsigns">+</field>
+                        <value name="A">
+                          <block type="variables_get" id="hJ`Ao%LdAa+KLcqc,zZ:">
+                            <field name="VAR" id="T3S0v}$5sdk0Qs*kfhvs" variabletype="">count</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="const_value" id="ddEFR/`l:HX@A57m@Um_">
+                            <field name="var">1</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="basic_print" id="Jh@Et3~l$%/Gxb`#gF7:">
+                        <value name="VALUE">
+                          <block type="math_arithmetic" id="xW2c^D@!`k9w(-L,%H:r">
+                            <field name="crocsigns">+</field>
+                            <value name="A">
+                              <block type="str" id=".Xm37zlUvxpOoKsH6Ftt">
+                                <value name="A">
+                                  <block type="variables_get" id="WAt/uy_V|CB8,hui{EGW">
+                                    <field name="VAR" id="!}/pqY^iO@HisGD,#mQ." variabletype="">name</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_arithmetic" id="9Q8U$4Z.t:_hG9y24BsA">
+                                <field name="crocsigns">+</field>
+                                <value name="A">
+                                  <block type="const_txt" id="|FWC-2APBg!*Q.?xjJQK">
+                                    <field name="var">:</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="str" id="fokOS8FdT|;,~HyB.clQ">
+                                    <value name="A">
+                                      <block type="variables_get" id="^;obfEP:n1FV(k1XJRJ7">
+                                        <field name="VAR" id="T3S0v}$5sdk0Qs*kfhvs" variabletype="">count</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="newthread" id="W~Pi|;pso_A^K!01fy*q" x="164" y="338">
+    <statement name="DO">
+      <block type="procedures_callnoreturn" id="n`b;vK*l$km4({GJ?G_5">
+        <mutation name="xxxx">
+          <arg name="name"></arg>
+          <arg name="delay"></arg>
+        </mutation>
+        <value name="ARG0">
+          <block type="const_value" id="32o*C|m!2i#d+]0Y,Q;b">
+            <field name="var">11</field>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="const_value" id="@*:=~F{50z4ALKMZY7SS">
+            <field name="var">1</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <next>
+      <block type="newthread" id="(;(!fcgWhU*(Lfs]sdO`">
+        <statement name="DO">
+          <block type="procedures_callnoreturn" id="JyN_*+;)~Fm@Roymf@p:">
+            <mutation name="xxxx">
+              <arg name="name"></arg>
+              <arg name="delay"></arg>
+            </mutation>
+            <value name="ARG0">
+              <block type="const_value" id="3Ap13(.MVD:P,)SRAAfM">
+                <field name="var">22</field>
+              </block>
+            </value>
+            <value name="ARG1">
+              <block type="const_value" id="-kC`)SN_uAS]h4P}y5B{">
+                <field name="var">2</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <next>
+          <block type="while_true" id="vv:Jnc$7_4us_oPQFk_D">
+            <statement name="DO">
+              <block type="sleep" id="n?6yOwD=_Sp=txw/8mP8"></block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

@@ -1,0 +1,15 @@
+UI:
+ui\node_modules\folderify\lib\folderify.js116行
+增加：folder = folder.replace(/\\/g,"/");
+
+
+server:
+需要有python2的环境 
+server\node_modules\nan\nan_maybe_43_inl.h   88行
+改为：return obj->Set(GetCurrentContext(), 0, value);//ForceSet(GetCurrentContext(), key, value, attribs);
+
+先执行一次yarn， 下载， 终止
+打开记事本，修改好
+再次执行yarn，nan目录将会被清除，卡住cmd， 保存记事本内容， cmd继续
+
+

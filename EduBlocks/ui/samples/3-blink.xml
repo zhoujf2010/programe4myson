@@ -1,0 +1,21 @@
+﻿<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="importgpiozero" id="eO^nWS(R81uy8v:uAI)_" x="327" y="155">
+    <next>
+      <block type="ledset" id="Mh9(C|pX2Yaw3G:qH]%`">
+        <field name="led">led</field>
+        <field name="pin">18</field>
+        <next>
+          <block type="while_true" id="@^Td%brjFV587e*_XQ+X">
+            <statement name="DO">
+              <block type="ledaction" id="nU2/I)@E*p:k^J^6]I=[">
+                <field name="led">led</field>
+                <field name="action">blink</field>
+                <field name="bracket"></field>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

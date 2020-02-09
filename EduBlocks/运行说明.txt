@@ -1,0 +1,17 @@
+准备
+cd ui
+yarn
+yarn build
+cd ../server
+yarn
+yarn build
+
+
+进入server目录
+cd server
+yarn watch
+
+
+开发时，再开个终端
+cd ui
+yarn watch

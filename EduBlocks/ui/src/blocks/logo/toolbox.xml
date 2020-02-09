@@ -1,0 +1,31 @@
+<category name="logowedo" colour="240">
+  <category name="WeDo2" colour="290">
+    <block type="connect"></block>
+    <block type="disconnect"></block>
+    <block type="motoron"></block>
+    <block type="motoroff"></block>
+    <block type="distnace"></block>
+    <block type="tiltX"></block>
+    <block type="tiltY"></block>
+</category>  
+  <category name="EV3" colour="240">
+    <block type="ev3connect"></block>
+    <block type="ev3disconnect"></block>
+    <block type="ev3motoron"></block>
+    <block type="ev3motordegree"></block>
+    <block type="ev3motorpos"></block>
+    <block type="ev3motoroff"></block>
+    <block type="ev3ultradistance"></block>
+    <block type="ev3touchispressed"></block>
+    <block type="ev3touchwaitpressed"></block>
+    <block type="ev3touchwaitreleased"></block>
+    <block type="ev3colorambient"></block>
+    <block type="ev3colorreflected"></block>
+    <block type="ev3colordetect"></block>
+    <block type="ev3colordetect2"></block>
+    <block type="ev3gyroangle"></block>
+    <block type="ev3gyrorate"></block>
+    <block type="ev3playsoundfile"></block>
+    <block type="ev3displayimage"></block>
+</category>  
+</category>  

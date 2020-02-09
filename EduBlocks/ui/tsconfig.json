@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "sourceMap": false,
+        "strict": true,
+        "noUnusedLocals": true,
+        "jsx": "react",
+        "outDir": "build"
+    },
+    "compileOnSave": false
+}

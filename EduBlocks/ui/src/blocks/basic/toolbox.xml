@@ -1,0 +1,39 @@
+<category name="基本" colour="336">
+  <category name="基本运算" colour="270">
+	  <block type="const_value"></block>
+	  <block type="const_txt"></block>
+	  <block type="basic_print"></block>
+	  <block type="basic_input"></block>
+	  <block type="math_arithmetic"></block>
+	  <block type="math_single"></block>
+	  <block type="sleep"></block>
+	<block type="random"></block>
+  </category>
+  <category name="逻辑判断" colour="270">
+	<block type="if"></block>
+	<block type="elif"></block>
+	<block type="else"></block>
+	  <block type="logic_compare"></block>
+	  <block type="logic_operation"></block>
+	  <block type="logic_negate"></block>
+  </category>
+  <category name="循环" colour="270">
+	  <block type="while_true"></block>
+	  <block type="whileout"></block>
+	  <block type="whiletimes"></block>
+	  <block type="for"></block>
+	  <block type="pass"></block>
+	  <block type="break"></block>
+  </category>
+  <category name="链表" colour="270">
+  </category>
+  <category name="字符串" colour="270">
+	  <block type="str"></block>
+  </category>
+  <category name="系统" colour="270">
+	  <block type="newthread"></block>
+	  <block type="gettime"></block>
+  </category>
+  <category name="变量" colour="346" custom="VARIABLE"></category>
+  <category name="函数" colour="389" custom="PROCEDURE"></category>
+</category>
