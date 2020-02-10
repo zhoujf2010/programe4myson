@@ -19,8 +19,8 @@ class WebSocketIO(object):
     classdocs
     '''
 
-    def __init__(self, msgcallback):
-        self.ws = ws = websocket.WebSocketApp("ws://localhost:55/scratch/bt",
+    def __init__(self, msgcallback,addr):
+        self.ws = ws = websocket.WebSocketApp("ws://localhost:55/scratch/" + addr,
         on_message=self.on_message,
         on_error=self.on_error,
         on_close=self.on_close)
@@ -30,6 +30,7 @@ class WebSocketIO(object):
         self.currentmsg1 = ""
         self.currentmsg2 = ""
         self.msgcallback = msgcallback
+        self.msglst = {}
         
         def run(*args):
             print('started....')
@@ -45,6 +46,7 @@ class WebSocketIO(object):
     def on_message(self, message):
 #         print("rec:", message)
         dt = json.loads(message)
+        self.msglst[dt["id"]] = dt["result"]
         self.msgcallback(dt)
     
     def on_error(self, error):
@@ -92,6 +94,28 @@ class WebSocketIO(object):
         self.ws.send(msg)
 #         print("send:" + msg)
         return index
+    
+    def sendmethodSync(self,method,param):
+        index = self.index
+        if index < 65535:
+            index = index + 1;
+        else:
+            index = 1
+        self.index = index
+        msg = '{"jsonrpc":"2.0","method":"%s","params":%s,"id":%d}' % (method,param,index)
+        self.ws.send(msg)
+        return index
+    
+    def sendmethod(self,method,param):
+        index = self.sendmethodSync(method,param)
+        
+        #等待结果
+        while index not in self.msglst:
+            pass
+        result = self.msglst[index]
+        del self.msglst[index]
+        
+        return result
     
     def sendtxt(self,txt):
         self.ws.send(txt)
