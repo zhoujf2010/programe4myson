@@ -1,9 +1,9 @@
 
-from wedo2.input_output.data_format import DataFormat
-from wedo2.input_output.input_format import InputFormat, InputFormatUnit
-from wedo2.services.lego_service import LegoService
+from .data_format import DataFormat
+from .input_format import InputFormat, InputFormatUnit
+from .lego_service import LegoService
 from enum import Enum
-from wedo2.input_output.input_command import InputCommand
+from .input_command import InputCommand
 import base64
 
 UUID_CUSTOM_BASE = "1212-EFDE-1523-785FEABCD123"

@@ -1,8 +1,8 @@
 
-from wedo2.services.lego_service import LegoService
-from wedo2.input_output.data_format import DataFormat
-from wedo2.input_output.input_format import InputFormat, InputFormatUnit
-from wedo2.input_output.input_command import InputCommand
+from .lego_service import LegoService
+from .data_format import DataFormat
+from .input_format import InputFormat, InputFormatUnit
+from .input_command import InputCommand
 from enum import Enum
 
 SERVICE_MOTION_SENSOR_NAME = "Motion Sensor"

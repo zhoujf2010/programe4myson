@@ -33,7 +33,7 @@ class ev3(object):
         self.waitidMap = {}
         self._msg_cnt = 0
         self.peripheralId = ""
-        ws = WebSocketIO(self.msg,"bt")
+        ws = WebSocketIO(self.msg)
         self.io = ws
         self._connect()  # connect throw websocket
         self._sync_mode = const.STD
@@ -254,7 +254,7 @@ class ev3(object):
         if sleep_ms:
             sleep_ms = float(sleep_ms / 1000)
         while True:
-            if self.ispressed(port) == wait_for_press:
+            if self.Touch_ispressed(port) == wait_for_press:
                 return True
             if timeout_ms is not None and time.time() >= tic + timeout_ms * 1000:
                 return False

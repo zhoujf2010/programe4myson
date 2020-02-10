@@ -1,5 +1,5 @@
 
-from wedo2 import byte_utils
+from . import byte_utils
 from enum import Enum
 
 

@@ -18,8 +18,8 @@ class ServiceManager:
         while 6 not in self.services_data.keys():
             pass
         
-        for k in self.services_data.keys():
-            print(self.services_data[k])
+#         for k in self.services_data.keys():
+#             print(self.services_data[k])
             
         self.io.sendtxt('{"jsonrpc":"2.0","method":"stopNotifications","params":{"serviceId":"00001523-1212-efde-1523-785feabcd123","characteristicId":"00001527-1212-efde-1523-785feabcd123"},"id":2}')
          
@@ -36,7 +36,8 @@ class ServiceManager:
     def create_services(self, services_data):
         for connect_id in services_data.keys():
             connect_info = services_data[connect_id]
-            service = LegoServiceFactory.create(connect_info, self.io)
+            v = LegoServiceFactory()
+            service = v.create(connect_info, self.io)
             if service != None:
                 self.services.add(service)
 

@@ -1,6 +1,6 @@
 
-from wedo2.input_output.input_format import InputFormatUnit
-from wedo2 import byte_utils
+from .input_format import InputFormatUnit
+from . import byte_utils
 
 
 class LegoService(object):

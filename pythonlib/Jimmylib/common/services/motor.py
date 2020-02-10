@@ -1,6 +1,6 @@
 
-from wedo2.services.lego_service import LegoService
-from wedo2.input_output.output_command import OutputCommand
+from .lego_service import LegoService
+from .output_command import OutputCommand
 from enum import Enum
 
 MOTOR_MIN_SPEED = 1
@@ -74,7 +74,7 @@ class Motor(LegoService):
             actual_result_int = -actual_result_int
 
         output_command = OutputCommand.command_write_motor_power(actual_result_int, connect_id)
-        print(output_command.data)
+#         print(output_command.data)
         self.io.sendcmd(output_command.data)
         
     def convert_unsigned_motor_power_to_signed(self, power, direction):

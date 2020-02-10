@@ -13,6 +13,7 @@ import os
 #pip install PocketSphinx
 #pip install pyaudio
 #pip install baidu-aip
+#pip install playsound
 
 #https://cloud.tencent.com/developer/article/1149294
 

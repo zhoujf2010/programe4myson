@@ -68,7 +68,7 @@ class WebSocketIO2(object):
         self.index = index
         msg = '{"jsonrpc":"2.0","method":"write","params":{"serviceId":"00004f0e-1212-efde-1523-785feabcd123","characteristicId":"00001565-1212-efde-1523-785feabcd123","message":"%s","encoding":"base64"},"id":%d}'%(str(s,'utf-8'),index)
         self.ws.send(msg)
-        print("Send:"+msg)
+        #print("Send:"+msg)
         
     def sendcmd2(self,casid, cmd):
         s = base64.b64encode(bytes(cmd))
