@@ -228,7 +228,7 @@ namespace scratch_link
 
                 var responseText = JsonConvert.SerializeObject(response);
 
-                Console.WriteLine("REP:" + responseText);
+                //Console.WriteLine("REP:" + responseText);
                 await sendResponseText(responseText);
             }
 
@@ -255,7 +255,7 @@ namespace scratch_link
 
             try
             {
-                Console.WriteLine("Rec:" + message);
+                //Console.WriteLine("Rec:" + message);
                 var json = JObject.Parse(message);
 
                 // do this as early as possible so that error responses can include it.

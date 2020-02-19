@@ -7,6 +7,8 @@ import websocket
 import json
 import time
 import base64
+import sys
+import os
 
 try:
     import thread
@@ -33,7 +35,6 @@ class WebSocketIO(object):
         self.msglst = {}
         
         def run(*args):
-            print('started....')
             ws.run_forever()
 
         thread.start_new_thread(run, ())
@@ -50,10 +51,19 @@ class WebSocketIO(object):
         self.msgcallback(dt)
     
     def on_error(self, error):
-        print(error)
+        if "10061" in str(error):
+            print("未打开连接器")
+        else:
+            print(error)
+        os._exit(1)
+        sys.exit(1)
+#         exit()
     
     def on_close(self):
-        print("### closed ###")
+#         print("### closed ###")
+        print("连接器关闭")
+        os._exit(1)
+        sys.exit(1)
     
     def on_open(self):
         self.isstarted = True
@@ -119,11 +129,9 @@ class WebSocketIO(object):
     
     def sendtxt(self,txt):
         self.ws.send(txt)
-#         print("send:" + txt)
         
     def send(self, msg):
         self.ws.send(msg)
-#         print("send:" + msg)
     
     def disconnect(self):
         self.ws.close()

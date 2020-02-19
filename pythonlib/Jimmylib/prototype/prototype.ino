@@ -1,6 +1,7 @@
 
 #ifndef SERIAL_RATE
 #define SERIAL_RATE         115200
+//#define SERIAL_RATE         9600
 #endif
 
 #ifndef SERIAL_TIMEOUT
@@ -19,6 +20,9 @@ void setup() {
 
 void loop() {
     switch (readData()) {
+//        case -1 :
+//            //测试信号
+//            Serial.println("t");
         case 0 :
             //set digital low
             digitalWrite(readData(), LOW); break;
