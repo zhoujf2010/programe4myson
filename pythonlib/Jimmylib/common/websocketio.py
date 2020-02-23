@@ -47,7 +47,8 @@ class WebSocketIO(object):
     def on_message(self, message):
 #         print("rec:", message)
         dt = json.loads(message)
-        self.msglst[dt["id"]] = dt["result"]
+        if "result" in dt:
+            self.msglst[dt["id"]] = dt["result"]
         self.msgcallback(dt)
     
     def on_error(self, error):

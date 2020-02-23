@@ -14,7 +14,7 @@ if __name__ == '__main__':
     # 电机测试
     hub.turn_motor(50)
     print(1)
-    time.sleep(5)
+    time.sleep(2)
 #     hub.turn_motor(60)
 #     time.sleep(2)
 #     hub.turn_motor(40)
@@ -34,10 +34,10 @@ if __name__ == '__main__':
 #         time.sleep(0.1)
     
     #倾斜传感器
-    time.sleep(2)
-    for i in range(1000):
-        print(hub.get_tiltX() ,'   ', hub.get_tiltY())
-        time.sleep(0.1)
+#     time.sleep(2)
+#     for i in range(1000):
+#         print(hub.get_tiltX() ,'   ', hub.get_tiltY())
+#         time.sleep(0.1)
 
     # 两合
 #     time.sleep(2)
