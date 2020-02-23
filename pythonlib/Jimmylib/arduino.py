@@ -5,7 +5,6 @@ Created on 2020年2月2日
 '''
 
 from .common import WebSocketIO
-from torch.utils.data._utils.pin_memory import pin_memory
 
 
 class arduino(object):

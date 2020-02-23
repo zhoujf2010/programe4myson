@@ -33,7 +33,7 @@ class ev3(object):
         self.waitidMap = {}
         self._msg_cnt = 0
         self.peripheralId = ""
-        ws = WebSocketIO(self.msg)
+        ws = WebSocketIO(self.msg,"bt")
         self.io = ws
         self._connect()  # connect throw websocket
         self._sync_mode = const.STD
