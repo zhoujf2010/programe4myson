@@ -16,7 +16,7 @@ if __name__ == '__main__':
 #         ev3.MotorOn(ev3.PORT_A, (i * 10))
 #         time.sleep(1)
     ev3.MotorOff(ev3.PORT_A)
-    
+    ev3.playSoundFile("Hello", 50)
 #     ev3.testsound()
 #     ev3.MotorOn(ev3.PORT_D, 50)
 #     print(1)

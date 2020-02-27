@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scratch_link", "scratch_link.csproj", "{551CEE90-FF77-4A3F-815D-04C5BFFAA4D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp2", "..\WindowsFormsApp2\WindowsFormsApp2.csproj", "{9B1B50B8-41E3-49E2-ABBD-AC96AB0209B8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{551CEE90-FF77-4A3F-815D-04C5BFFAA4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{551CEE90-FF77-4A3F-815D-04C5BFFAA4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{551CEE90-FF77-4A3F-815D-04C5BFFAA4D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B1B50B8-41E3-49E2-ABBD-AC96AB0209B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B1B50B8-41E3-49E2-ABBD-AC96AB0209B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B1B50B8-41E3-49E2-ABBD-AC96AB0209B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B1B50B8-41E3-49E2-ABBD-AC96AB0209B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

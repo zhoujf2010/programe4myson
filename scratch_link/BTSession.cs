@@ -84,10 +84,10 @@ namespace scratch_link
             switch (method)
             {
                 case "discover":
-                    if (s_peripheralInfo!= null)//记录上次的设备
+                    if (s_peripheralInfo != null)//记录上次的设备
                         SendRemoteRequest("didDiscoverPeripheral", s_peripheralInfo);
                     else
-                        Discover(parameters);   
+                        Discover(parameters);
                     await completion(null, null);
                     break;
                 case "connect":
@@ -164,7 +164,7 @@ namespace scratch_link
             s_currentSession = this;
             if (s_connectMap.ContainsKey(id))
             {
-               // ListenForMessages(id);
+                // ListenForMessages(id);
                 return;
             }
 
@@ -225,7 +225,7 @@ namespace scratch_link
         {
             try
             {
-               DataReader  _socketReader = s_readerMap[id];
+                DataReader _socketReader = s_readerMap[id];
                 DataWriter _socketWriter = s_writerMap[id];
 
                 while (true)
@@ -268,11 +268,11 @@ namespace scratch_link
 
         private void PeripheralDiscovered(DeviceWatcher sender, DeviceInformation deviceInformation)
         {
-            if (!deviceInformation.Properties.TryGetValue(IsPresentPropertyName, out var isPresent)
-                || isPresent == null || (bool)isPresent == false)
-            {
-                return;
-            }
+            //bool ret = deviceInformation.Properties.TryGetValue(IsPresentPropertyName, out var isPresent);
+            //if (!ret || isPresent == null || (bool)isPresent == false)
+            //{
+            //    return;
+            //}
             deviceInformation.Properties.TryGetValue(BluetoothAddressPropertyName, out var address);
             deviceInformation.Properties.TryGetValue(SignalStrengthPropertyName, out var rssi);
             var peripheralId = ((string)address)?.Replace(":", "");
