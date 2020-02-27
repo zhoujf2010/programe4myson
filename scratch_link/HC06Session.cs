@@ -60,7 +60,7 @@ namespace scratch_link
                     sp.PinChanged += Sp_PinChanged;
                     sp.Open();
                 }
-                dt = "";
+                dt = 0xff;
 
                 if (!sp.CtsHolding)
                 {//设备断开，则重新连接后发消息
@@ -70,29 +70,27 @@ namespace scratch_link
                 }
 
                 //发送测试
-                byte[] bts = Encoding.UTF8.GetBytes("-1");
+                byte[] bts = new byte[1];
+                bts[0] = 0;
                 sp.Write(bts, 0, bts.Length);
-                string ret = "";
                 int p = 0;
                 while (true)
                 {
-                    string ss = getData();
-                    ret += ss;
-                    if (ret.Contains("w"))
+                    byte ss = getData();
+                    if (ss != 0xff)
                         break;
                     Thread.Sleep(10);
                     p++;
                     if (p > 500)//连接失败.5秒
                     {
                         return new JObject
-                {
-                    new JProperty("result", "Error"),
-                    new JProperty("msg", "连接设备失败")
-                };
+                        {
+                            new JProperty("result", "Error"),
+                            new JProperty("msg", "连接设备失败")
+                        };
 
                     }
                 }
-
 
                 var peripheralInfo = new JObject
                 {
@@ -135,7 +133,8 @@ namespace scratch_link
         private async Task<JToken> SendMessage(JObject parameters)
         {
             var str = parameters["msg"]?.ToObject<string>();
-            byte[] bts = Encoding.UTF8.GetBytes(str);
+            byte[] bts = new byte[1];// Encoding.UTF8.GetBytes(str);
+            bts[0] = (byte)int.Parse(str);
             sp.Write(bts, 0, bts.Length);
 
             return null;
@@ -152,11 +151,11 @@ namespace scratch_link
                 };
 
             }
-                string ss = getData();
+            byte ss = getData();
             var peripheralInfo = new JObject
                 {
                     new JProperty("result", "OK"),
-                    new JProperty("msg", ss.Trim())
+                    new JProperty("msg", ss.ToString())
                 };
 
             return peripheralInfo;
@@ -167,32 +166,47 @@ namespace scratch_link
         private void Sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             Byte[] readBytes = new Byte[sp.BytesToRead];
-            sp.Read(readBytes, 0, readBytes.Length);
-            string decodedString = Encoding.UTF8.GetString(readBytes);
-            lock (dt) { 
-                dt += decodedString;
+            int p = sp.Read(readBytes, 0, readBytes.Length);
+            lock (this)
+            {
+                foreach (byte bt in readBytes)
+                {
+                    dt = bt;
+                }
             }
-            Console.WriteLine("===>" + decodedString);
-        }
-        string dt = "";
 
-        private string getData()
+            if (readBytes.Length == 0)
+                Console.WriteLine("===>空");
+            else
+            {
+                string ss = "";
+                for (int i = 0; i < p; i++)
+                {
+                    ss += readBytes[i].ToString() + " ";
+                }
+                Console.WriteLine("===>" + ss);
+            }
+        }
+
+        byte dt = 0xff;
+
+        private byte getData()
         {
-            string tmp = "";
-            lock (dt)
+            byte tmp = 0;
+            lock (this)
             {
                 tmp = dt;
-                dt = "";
+                dt = 0xff;
             }
             return tmp;
         }
 
-        private string waitCmd()
+        private byte waitCmd()
         {
             while (true)
             {
-                string ss = getData();
-                if (ss.Length > 0 && ss.EndsWith("\r\n"))// && ss.StartsWith("w"))
+                byte ss = getData();
+                if (ss != 0xff)// && ss.StartsWith("w"))
                     return ss;
                 Thread.Sleep(1);
             }

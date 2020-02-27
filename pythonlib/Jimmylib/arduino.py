@@ -34,16 +34,10 @@ class arduino(object):
         self.io.sendmethod("disconnect", '{}')
     
     def _setoutput(self, pin):
-        self.__sendData('6')
-        self._waitW()
-        self.__sendData(pin)
-        self._waitW()
+        self.__sendData(0,1,pin)
     
     def _setinput(self, pin):
-        self.__sendData('8')
-        self._waitW()
-        self.__sendData(pin)
-        self._waitW()
+        self.__sendData(0,3,pin)
     
     def setState(self, pin, val):
         if pin not in self._outputlst:
@@ -55,31 +49,31 @@ class arduino(object):
             self.setLow(pin)
     
     def setLow(self, pin):
-        self.__sendData('0')
-        self._waitW()
-        self.__sendData(pin)
-        self._waitW()
+#         self.__sendData('0')
+#         self._waitW()
+#         self.__sendData(pin)
+#         self._waitW()
+        self.__sendData(1,0,pin)
     
     def setHigh(self, pin):
-        self.__sendData('1')
-        self._waitW()
-        self.__sendData(pin)
-        self._waitW()
+#         self.__sendData('1')
+#         self._waitW()
+#         self.__sendData(pin)
+#         self._waitW()
+        # v = 0x40 | pin
+        self.__sendData(1,1,pin)
 
     def getState(self, pin):
         if pin not in self._inputlst:
             self._setinput(pin)
             self._inputlst.append(pin)
-        self.__sendData('2')
-        self._waitW()
-        self.__sendData(pin)
         
-        val = self._waitW()
+            
+        self.__sendData(2,0,pin)
         # 继续等待返回的值
-        val = str.strip(val)
-        while len(val) == 0:
-            s = self.__readData()
-            val = val + s
+        val = self.__readData()
+        while val == "255":
+            val = self.__readData()
         return int(str.strip(val))
     
     def analogWrite(self, pin, value):
@@ -95,7 +89,8 @@ class arduino(object):
 #         self.__sendData(pin)
 #         return self.__getData()
 
-    def __sendData(self, serial_data):
+    def __sendData(self, cmd, param, pin):
+        serial_data = (cmd << 6) | (param << 4) | pin
         self.io.sendmethod("send", '{"msg":"%s"}' % (serial_data))
     
     def _waitW(self):

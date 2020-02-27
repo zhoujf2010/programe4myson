@@ -178,7 +178,8 @@ namespace scratch_link
                 _socketLock.Wait();
                 try
                 {
-                    await _webSocket.Send(response);
+                    if (_webSocket != null)
+                        await _webSocket.Send(response);
                 }
                 finally
                 {
@@ -197,7 +198,8 @@ namespace scratch_link
                 _socketLock.Wait();
                 try
                 {
-                    await _webSocket.Send(responseBytes);
+                    if (_webSocket != null)
+                        await _webSocket.Send(responseBytes);
                 }
                 finally
                 {

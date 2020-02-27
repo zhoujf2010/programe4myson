@@ -8,7 +8,7 @@ import time
 import json
 import base64
 from .common import ServiceManager
-from .common import WebSocketIO2
+from .common import WebSocketIO
 from .common import IOType
 from .common.services.motor import MotorDirection
 from .common.services.tilt_sensor import TiltSensorMode
@@ -19,7 +19,8 @@ class wedo(object):
     '''
 
     def __init__(self):
-        self.io = WebSocketIO2(self.on_message)
+        self.io = WebSocketIO(self.on_message, "ble")
+        #self.io = WebSocketIO2(self.on_message)
         print("成功连接到代理器！")
         self.peripheralId = 0
         self._connect()
@@ -37,13 +38,13 @@ class wedo(object):
         
     def _connect(self):
         # 启动发现设备
-        self.io.sendtxt('{"jsonrpc":"2.0","method":"discover","params":{"filters":[{"services":["00001523-1212-efde-1523-785feabcd123"]}],"optionalServices":["00004f0e-1212-efde-1523-785feabcd123"]},"id":0}')
+        self.io.sendmethodSync("discover", '{"filters":[{"services":["00001523-1212-efde-1523-785feabcd123"]}],"optionalServices":["00004f0e-1212-efde-1523-785feabcd123"]}')
         while self.peripheralId == 0:
             time.sleep(0.00001)
-        self.io.sendtxt('{"jsonrpc":"2.0","method":"connect","params":{"peripheralId":%d},"id":1}' % self.peripheralId)
+        self.io.sendmethodSync("connect", '{"peripheralId":%d}' % self.peripheralId)
     
     def disconnect(self):
-        self.io.sendtxt('{"jsonrpc":"2.0","method":"stopNotifications","params":{"serviceId":"00001523-1212-efde-1523-785feabcd123","characteristicId":"00001527-1212-efde-1523-785feabcd123"},"id":2}')
+#         self.io.sendtxt('{"jsonrpc":"2.0","method":"stopNotifications","params":{"serviceId":"00001523-1212-efde-1523-785feabcd123","characteristicId":"00001527-1212-efde-1523-785feabcd123"},"id":2}')
 #         self.io.sendtxt('{"jsonrpc":"2.0","method":"stopNotifications","params":{"serviceId":"00001523-1212-efde-1523-785feabcd123","characteristicId":"00001527-1212-efde-1523-785feabcd123"},"id":2}')
         self.io.disconnect()
 

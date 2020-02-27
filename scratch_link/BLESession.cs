@@ -126,6 +126,8 @@ namespace scratch_link
             }
         }
 
+        private bool firstconnect = false;
+
         /// <summary>
         /// Handle a client request
         /// </summary>
@@ -138,14 +140,20 @@ namespace scratch_link
             switch (method)
             {
                 case "discover":
-                    if (m_peripheralData != null)
+                    if (m_peripheralData != null) { 
                         SendRemoteRequest("didDiscoverPeripheral", m_peripheralData);
+                        firstconnect = false;
+                    }
                     else
+                    {
                         Discover(parameters);
+                        firstconnect = true;
+                    }
                     await completion(null, null);
                     break;
                 case "connect":
-                    await Connect(parameters);
+                    //if (firstconnect)
+                        await Connect(parameters);
                     await completion(null, null);
                     break;
                 case "write":
@@ -155,7 +163,8 @@ namespace scratch_link
                     await completion(await Read(parameters), null);
                     break;
                 case "startNotifications":
-                    await StartNotifications(parameters);
+                   //if (firstconnect)
+                        await StartNotifications(parameters);
                     await completion(null, null);
                     break;
                 case "stopNotifications":
@@ -343,11 +352,11 @@ namespace scratch_link
             var buffer = EncodingHelpers.DecodeBuffer(parameters);
             var endpoint = await GetEndpoint("write request", parameters, GattHelpers.BlockListStatus.ExcludeWrites);
 
-            Console.Write(endpoint.AttributeHandle);
-            Console.Write(" ");
-            foreach (byte bt in buffer)
-                Console.Write(bt + "  ");
-            Console.WriteLine("");
+            //Console.Write(endpoint.AttributeHandle);
+            //Console.Write(" ");
+            //foreach (byte bt in buffer)
+            //    Console.Write(bt + "  ");
+            //Console.WriteLine("");
 
             var withResponse = (parameters["withResponse"]?.ToObject<bool>() ?? false) ||
                 !endpoint.CharacteristicProperties.HasFlag(GattCharacteristicProperties.WriteWithoutResponse);

@@ -49,6 +49,16 @@ class WebSocketIO(object):
         dt = json.loads(message)
         if "result" in dt:
             self.msglst[dt["id"]] = dt["result"]
+            
+        if "method" in dt  and dt["method"] == "characteristicDidChange":
+            if dt["params"]["characteristicId"].startswith("00001560") >0 :
+                msg =  dt["params"]["message"]
+                data = base64.b64decode(msg)
+                if data[1] == 1:
+                    self.currentmsg1 = data
+                elif data[1] == 2:
+                    self.currentmsg2 = data
+                    
         self.msgcallback(dt)
     
     def on_error(self, error):
@@ -81,6 +91,12 @@ class WebSocketIO(object):
         self.ws.send(msg)
 #         print("send:" + msg)
         return index
+        
+    def sendcmd2(self,casid, cmd):
+        s = base64.b64encode(bytes(cmd))
+        param = '{"serviceId":"00004f0e-1212-efde-1523-785feabcd123","characteristicId":"%s","message":"%s","encoding":"base64"}'%(casid,str(s,'utf-8'))
+        self.sendmethodSync("write", param)
+        
     
     def sendConect(self, peripheralId):
         index = self.index
@@ -136,3 +152,11 @@ class WebSocketIO(object):
     
     def disconnect(self):
         self.ws.close()
+        
+    def getCurrentmsg(self,connect_id):
+        if connect_id == 1:
+            return self.currentmsg1
+        elif connect_id ==2:
+            return self.currentmsg2
+        print('-------------')
+        return None

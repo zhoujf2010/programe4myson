@@ -16,68 +16,26 @@ namespace scratch_link
             _sessionCreationDelegate = sessionCreationDelegate;
         }
 
-        static Session oldSession1 = null;
-        static Session oldSession2 = null;
-        static Session oldSession3 = null;
+        Session oldSession = null;
 
         public void Close()
         {
-            if (oldSession1 != null)
-                oldSession1.Dispose();
-            if (oldSession2 != null)
-                oldSession2.Dispose();
-            if (oldSession3 != null)
-                oldSession3.Dispose();
+            if (oldSession != null)
+                oldSession.Dispose();
         }
 
         public void ClientDidConnect(IWebSocketConnection webSocket)
         {
             string path = webSocket.ConnectionInfo.Path;
             Session session = null;
-            if (path.Contains("ble"))
+            if (oldSession != null)
             {
-                if (oldSession1 != null)
-                {
-                    session = oldSession1;
-                    session.setWebSocket(webSocket);
-                }
-                else
-                    session = _sessionCreationDelegate(webSocket);
-                oldSession1 = session;
+                session = oldSession;
+                session.setWebSocket(webSocket);
             }
-            else if (path.Contains("bt"))
-            {
-                if (oldSession2 != null)
-                {
-                    session = oldSession2;
-                    session.setWebSocket(webSocket);
-                }
-                else
-                    session = _sessionCreationDelegate(webSocket);
-                oldSession2 = session;
-            }
-            else if (path.Contains("hc"))
-            {
-                if (oldSession3 != null)
-                {
-                    session = oldSession3;
-                    session.setWebSocket(webSocket);
-                }
-                else
-                    session = _sessionCreationDelegate(webSocket);
-                oldSession3 = session;
-            }
-
-            //if (session is BTSession)
-            //{
-            //    if (oldSession1 != null)
-            //    {
-            //        --ActiveSessionCount;
-            //        ((App)(Application.Current)).UpdateIconText();
-            //        oldSession1.Dispose();
-            //    }
-            //    oldSession1 = session;
-            //}
+            else
+                session = _sessionCreationDelegate(webSocket);
+            oldSession = session;
 
             webSocket.OnOpen = () =>
             {
@@ -90,17 +48,15 @@ namespace scratch_link
             {
                 --ActiveSessionCount;
                 ((App)(Application.Current)).UpdateIconText();
-                if (oldSession1 != null && oldSession1 == session)
-                    oldSession1 = null;
-                if (oldSession2 != null && oldSession2 == session)
-                    oldSession2 = null;
-                if (oldSession3 != null && oldSession3 == session)
-                    oldSession3 = null;
+                //if (oldSession1 != null && oldSession1 == session)
+                //    oldSession1 = null;
                 if (session != null)
                 {
+                    //webSocket.OnMessage = null;
+                    //webSocket.OnBinary = null;
                     session.setWebSocket(null);
-                    session.Dispose();
-                    session = null;
+                    //session.Dispose();
+                    //session = null;
                 }
                 //oldSession1 = null;
             };
