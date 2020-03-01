@@ -75,7 +75,8 @@ class Motor(LegoService):
 
         output_command = OutputCommand.command_write_motor_power(actual_result_int, connect_id)
 #         print(output_command.data)
-        self.io.sendcmd(output_command.data)
+        self.io.sendcmd2("00001565-1212-efde-1523-785feabcd123",output_command.data)
+#         self.io.sendcmd(output_command.data)
         
     def convert_unsigned_motor_power_to_signed(self, power, direction):
         result_power = 0
