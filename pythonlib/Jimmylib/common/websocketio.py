@@ -94,6 +94,7 @@ class WebSocketIO(object):
         
     def sendcmd2(self,casid, cmd):
         s = base64.b64encode(bytes(cmd))
+        casid = casid.lower()
         param = '{"serviceId":"00004f0e-1212-efde-1523-785feabcd123","characteristicId":"%s","message":"%s","encoding":"base64"}'%(casid,str(s,'utf-8'))
         self.sendmethodSync("write", param)
         
