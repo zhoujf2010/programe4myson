@@ -19,11 +19,11 @@ class wedo(object):
     '''
 
     def __init__(self):
-        self.io = WebSocketIO(self.on_message, "ble")
+        self.io = WebSocketIO(self.on_message, "ble","wedo")
         #self.io = WebSocketIO2(self.on_message)
-        print("成功连接到代理器！")
         self.peripheralId = 0
         self._connect()
+        print("OK")
         
         self.service_manager = ServiceManager(self.io)
         self.service_manager.find_available_services()

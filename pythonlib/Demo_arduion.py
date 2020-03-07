@@ -19,9 +19,21 @@ if __name__ == '__main__':
     
 #     pin = 9 
     while True:
-        v = a.getState(10)
+        t = time.time()
+        v4 = a.getState(4)
+        v5 = a.getState(5)
+        v6 = a.getState(6)
+        v2 = a.getState(2)
+        v8 = a.getState(8)
+        v3 = a.getState(3)
+        v7 = a.getState(7)
+#         v4 = a.getState(5)
+#         v5 = a.getState(6)
 #         print(v)
-        a.setState(2, 1- v)
+        dt = time.time() - t;
+        print(v6,v7,v8,v2,v3,v4,v5,"用时:",dt / 1000.0)#,b.getState(4))
+        time.sleep(0.1)
+        #a.setState(12, 1- v)
 
 
 
@@ -39,13 +51,13 @@ if __name__ == '__main__':
 #             i = i+1   
 #             time.sleep(0.05)
         
-        for i in range(2,10):
+        for i in range(9,13):
             a.setState(i,1)
 #             time.sleep(0.01)
              
         time.sleep(0.1)
      
-        for i in range(2,10):
+        for i in range(9,13):
             a.setState(i,0)
              
         time.sleep(0.1)

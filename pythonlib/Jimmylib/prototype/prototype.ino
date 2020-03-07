@@ -7,6 +7,7 @@
 #ifndef SERIAL_TIMEOUT
 #define SERIAL_TIMEOUT      5
 #endif
+#include <MsTimer2.h>
 
 void setup() {
   Serial.begin(SERIAL_RATE);
@@ -16,9 +17,44 @@ void setup() {
     for (int i = 0; i < cmd; i++) {
       pinMode(readData(), OUTPUT);
     }*/
-  for (int i = 2; i < 9; i++)
-    pinMode(i, OUTPUT);
+  //for (int i = 2; i < 9; i++)
+  //  pinMode(i, OUTPUT);
+
+  //pinMode(3, OUTPUT);
+  //pinMode(13, OUTPUT);
+  //digitalWrite(13, LOW);
+  //digitalWrite(3, LOW);
+
+// 中断设置函数，每 500ms 进入一次中断
+   MsTimer2::set(5, event);
+   //开始计时
+   MsTimer2::start(); 
 }
+
+int pwrite = 0;
+int readpin[8]; //需要读的列表
+
+void event()
+{
+    byte ret =0;
+
+    //多个pin值，并入到一个值中
+    int num = 0;
+    for(int i =0; i < 8;i++){
+      if (readpin[i] == 0)
+        break;
+      byte v = digitalRead(readpin[i]);
+      ret = ret | (v << i);
+      num++;
+    }
+
+    //Serial.println("xx");
+    if (num >0)
+      Serial.write(ret);
+
+}
+
+bool temp = false;
 
 void loop() {
   byte v = readData2();
@@ -54,8 +90,31 @@ void loop() {
   else if (cmd == 2) {//读值
     Serial.write(digitalRead(pin));
   }
-//analogWrite
-//analogRead
+  else if (cmd == 3) {//设置批量读值
+    if (param == 0){
+      pwrite = 0;
+      for(int i =0;i < 8;i++)
+        readpin[i] = 0; //清空所有
+    }
+    else if (param == 1){
+      readpin[pwrite] = pin;
+      pwrite = pwrite + 1;
+    }
+    //Serial.println(pwrite);
+  }
+
+  /*if (temp) {
+    digitalWrite(3, LOW);
+    digitalWrite(13, HIGH);
+    temp = false;
+  }
+  else {
+    digitalWrite(3, LOW);
+    digitalWrite(13, LOW);
+    temp = true;
+  }*/
+  //analogWrite
+  //analogRead
 }
 
 

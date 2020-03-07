@@ -33,7 +33,7 @@ class ev3(object):
         self.waitidMap = {}
         self._msg_cnt = 0
         self.peripheralId = ""
-        ws = WebSocketIO(self.msg,"bt")
+        ws = WebSocketIO(self.msg,"bt","ev3")
         self.io = ws
         self._connect()  # connect throw websocket
         self._sync_mode = const.STD
@@ -65,7 +65,7 @@ class ev3(object):
         self.io.sendConect(self.peripheralId)
         while self.waitidMap[2] == 'wait':  # 等待反馈
             time.sleep(0.00001)
-        print("connected")       
+        print("OK")       
     
     def disconnect(self):
         self.io.disconnect()

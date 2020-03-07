@@ -349,6 +349,8 @@ namespace scratch_link
         /// <returns>The number of decoded bytes written</returns>
         private async Task<JToken> Write(JObject parameters)
         {
+            try
+            {
             var buffer = EncodingHelpers.DecodeBuffer(parameters);
             var endpoint = await GetEndpoint("write request", parameters, GattHelpers.BlockListStatus.ExcludeWrites);
 
@@ -372,6 +374,13 @@ namespace scratch_link
                     throw JsonRpcException.ApplicationError($"Error while attempting to write: {result.Status} {result.ProtocolError}"); // "ProtocolError 3"
                 default:
                     throw JsonRpcException.ApplicationError($"Error while attempting to write: {result.Status}"); // "Unreachable"
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                throw e;
             }
         }
 

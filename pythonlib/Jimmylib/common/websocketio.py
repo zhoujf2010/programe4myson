@@ -21,7 +21,8 @@ class WebSocketIO(object):
     classdocs
     '''
 
-    def __init__(self, msgcallback,addr):
+    def __init__(self, msgcallback, addr, name):
+        self.name = name
         self.ws = ws = websocket.WebSocketApp("ws://localhost:55/scratch/" + addr,
         on_message=self.on_message,
         on_error=self.on_error,
@@ -51,8 +52,8 @@ class WebSocketIO(object):
             self.msglst[dt["id"]] = dt["result"]
             
         if "method" in dt  and dt["method"] == "characteristicDidChange":
-            if dt["params"]["characteristicId"].startswith("00001560") >0 :
-                msg =  dt["params"]["message"]
+            if dt["params"]["characteristicId"].startswith("00001560") > 0 :
+                msg = dt["params"]["message"]
                 data = base64.b64decode(msg)
                 if data[1] == 1:
                     self.currentmsg1 = data
@@ -78,7 +79,7 @@ class WebSocketIO(object):
     
     def on_open(self):
         self.isstarted = True
-        print("### opened ###")
+        print("连接%s==>" % self.name, end='',flush=True)
         
     def sendcmd(self, cmd):
         index = self.index
@@ -92,12 +93,11 @@ class WebSocketIO(object):
 #         print("send:" + msg)
         return index
         
-    def sendcmd2(self,casid, cmd):
+    def sendcmd2(self, casid, cmd):
         s = base64.b64encode(bytes(cmd))
         casid = casid.lower()
-        param = '{"serviceId":"00004f0e-1212-efde-1523-785feabcd123","characteristicId":"%s","message":"%s","encoding":"base64"}'%(casid,str(s,'utf-8'))
+        param = '{"serviceId":"00004f0e-1212-efde-1523-785feabcd123","characteristicId":"%s","message":"%s","encoding":"base64"}' % (casid, str(s, 'utf-8'))
         self.sendmethodSync("write", param)
-        
     
     def sendConect(self, peripheralId):
         index = self.index
@@ -123,21 +123,21 @@ class WebSocketIO(object):
 #         print("send:" + msg)
         return index
     
-    def sendmethodSync(self,method,param):
+    def sendmethodSync(self, method, param):
         index = self.index
         if index < 65535:
             index = index + 1;
         else:
             index = 1
         self.index = index
-        msg = '{"jsonrpc":"2.0","method":"%s","params":%s,"id":%d}' % (method,param,index)
+        msg = '{"jsonrpc":"2.0","method":"%s","params":%s,"id":%d}' % (method, param, index)
         self.ws.send(msg)
         return index
     
-    def sendmethod(self,method,param):
-        index = self.sendmethodSync(method,param)
+    def sendmethod(self, method, param):
+        index = self.sendmethodSync(method, param)
         
-        #等待结果
+        # 等待结果
         while index not in self.msglst:
             pass
         result = self.msglst[index]
@@ -145,7 +145,7 @@ class WebSocketIO(object):
         
         return result
     
-    def sendtxt(self,txt):
+    def sendtxt(self, txt):
         self.ws.send(txt)
         
     def send(self, msg):
@@ -154,10 +154,10 @@ class WebSocketIO(object):
     def disconnect(self):
         self.ws.close()
         
-    def getCurrentmsg(self,connect_id):
+    def getCurrentmsg(self, connect_id):
         if connect_id == 1:
             return self.currentmsg1
-        elif connect_id ==2:
+        elif connect_id == 2:
             return self.currentmsg2
         print('-------------')
         return None

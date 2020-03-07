@@ -175,17 +175,24 @@ namespace scratch_link
                 }
             }
 
-            if (readBytes.Length == 0)
-                Console.WriteLine("===>空");
-            else
+            var parameters = new JObject
             {
-                string ss = "";
-                for (int i = 0; i < p; i++)
-                {
-                    ss += readBytes[i].ToString() + " ";
-                }
-                Console.WriteLine("===>" + ss);
-            }
+                new JProperty("message", dt)
+            };
+            SendRemoteRequest("hcval", parameters);
+
+
+            //if (readBytes.Length == 0)
+            //    Console.WriteLine("===>空");
+            //else
+            //{
+            //    string ss = "";
+            //    for (int i = 0; i < p; i++)
+            //    {
+            //        ss += readBytes[i].ToString() + " ";
+            //    }
+            //    Console.WriteLine("===>" + ss);
+            //}
         }
 
         byte dt = 0xff;

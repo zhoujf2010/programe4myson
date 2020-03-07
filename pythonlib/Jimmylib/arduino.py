@@ -5,6 +5,7 @@ Created on 2020年2月2日
 '''
 
 from .common import WebSocketIO
+import base64
 
 
 class arduino(object):
@@ -13,21 +14,24 @@ class arduino(object):
     '''
 
     def __init__(self, port="COM3", baudrate=115200):
-        self.io = WebSocketIO(self.msg, "hc")
-        print("成功连接到代理器！")
+        self.io = WebSocketIO(self.msg, "hc",'arduino')
         self._connect(port, baudrate)
+        print("OK")
         self._inputlst = []
         self._outputlst = []
+        #清空读入
+        self.__sendData(3, 0, 0)
+        self.currentmsg = 0
     
     def msg(self, dt):
 #         print(dt)
-        pass
+        if "method" in dt  and dt["method"] == "hcval":
+            msg =  dt["params"]["message"]
+            self.currentmsg = msg
     
     def _connect(self, port, baudrate):    
         ret = self.io.sendmethod("connect", '{"port":"%s","baudrate":"%d"}' % (port, baudrate))
-        if ret["result"] == "OK":
-            print("Arduino连接成功")
-        else:
+        if ret["result"] != "OK":
             raise Exception(ret["msg"])
     
     def disconnect(self):   
@@ -49,32 +53,25 @@ class arduino(object):
             self.setLow(pin)
     
     def setLow(self, pin):
-#         self.__sendData('0')
-#         self._waitW()
-#         self.__sendData(pin)
-#         self._waitW()
         self.__sendData(1,0,pin)
     
     def setHigh(self, pin):
-#         self.__sendData('1')
-#         self._waitW()
-#         self.__sendData(pin)
-#         self._waitW()
-        # v = 0x40 | pin
         self.__sendData(1,1,pin)
 
     def getState(self, pin):
         if pin not in self._inputlst:
             self._setinput(pin)
+            self.__sendData(3,1,pin) #设置pin为读取，不断反馈数据
             self._inputlst.append(pin)
+        pos = self._inputlst.index(pin)
         
-            
-        self.__sendData(2,0,pin)
-        # 继续等待返回的值
-        val = self.__readData()
-        while val == "255":
-            val = self.__readData()
-        return int(str.strip(val))
+        val = self.currentmsg >> pos
+        val = 0x01 & val
+        
+        if val > 0:
+            return 1
+        else:
+            return 0
     
     def analogWrite(self, pin, value):
         pass
