@@ -26,7 +26,7 @@ if __name__ == '__main__':
 #     time.sleep(2)
 #     hub.turn_motor(40)
 #     time.sleep(2)
-    hub.motor_brake()
+#     hub.motor_brake()
 #     time.sleep(2)
 #     hub.turn_motor(-40)
 #     time.sleep(2)

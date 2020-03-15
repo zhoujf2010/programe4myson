@@ -152,7 +152,24 @@ namespace scratch_link
                     await completion(null, null);
                     break;
                 case "connect":
-                    //if (firstconnect)
+                    if (_services != null)
+                    {
+                        foreach (var service in _services)
+                        {
+                            try
+                            {
+                                service.Dispose();
+                            }
+                            catch
+                            {
+                                // ignore: probably the peripheral is gone
+                            }
+                        }
+                        _services = null;
+                        _peripheral.Dispose();
+                    }
+                    _cachedCharacteristics.Clear();
+                        //if (firstconnect)
                         await Connect(parameters);
                     await completion(null, null);
                     break;
@@ -326,9 +343,11 @@ namespace scratch_link
                 });
 
             // clean up resources used by discovery
+            if (_watcher != null) { 
             _watcher.Stop();
             _watcher = null;
-            _reportedPeripherals.Clear();
+            }
+            //_reportedPeripherals.Clear();
             _optionalServices = null;
         }
 
@@ -441,12 +460,21 @@ namespace scratch_link
 
         private async Task StartNotifications(JObject parameters)
         {
+            try
+            {
             var endpoint = await GetEndpoint("startNotifications request", parameters, GattHelpers.BlockListStatus.ExcludeReads);
             var encoding = parameters.TryGetValue("encoding", out var encodingToken)
                 ? encodingToken?.ToObject<string>() // possibly null and that's OK
                 : "base64";
             await StartNotifications(endpoint, encoding);
             oldparameters = parameters;
+
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
         }
 
         private async Task StartNotifications(GattCharacteristic endpoint, string encoding)
@@ -544,10 +572,10 @@ namespace scratch_link
                 throw JsonRpcException.InvalidParams($"Could not determine service UUID for {errorContext}");
             }
 
-            if (_allowedServices?.Contains(serviceId.Value) != true)
-            {
-                throw JsonRpcException.InvalidParams($"attempt to access unexpected service: {serviceId}");
-            }
+            //if (_allowedServices?.Contains(serviceId.Value) != true)
+            //{
+            //    throw JsonRpcException.InvalidParams($"attempt to access unexpected service: {serviceId}");
+            //}
 
             var blockStatus = GattHelpers.GetBlockListStatus(serviceId.Value);
             if (blockStatus.HasFlag(checkFlag))
@@ -629,7 +657,7 @@ namespace scratch_link
                 // this case, so that's the hack being used here to check for a disposed peripheral.
                 var tempDisposalProbe = characteristic.Service;
             }
-            catch (ObjectDisposedException)
+            catch (ObjectDisposedException e)
             {
                 // This could mean that Bluetooth was turned off or the computer resumed from sleep
                 throw JsonRpcException.ApplicationError($"Peripheral is disposed for {errorContext}");

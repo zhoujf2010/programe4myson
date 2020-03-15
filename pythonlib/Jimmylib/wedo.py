@@ -23,10 +23,10 @@ class wedo(object):
         #self.io = WebSocketIO2(self.on_message)
         self.peripheralId = 0
         self._connect()
-        print("OK")
         
         self.service_manager = ServiceManager(self.io)
         self.service_manager.find_available_services()
+        print("OK")
     
     def on_message(self, dt):
 #         print("rec:"+str(dt))
