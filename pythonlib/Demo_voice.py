@@ -11,5 +11,5 @@ if __name__ == '__main__':
     while True:
         print("listing...")
         print(v.getVoice())
-        v.playVoice("你好啊")
+        #v.playVoice("你好啊")
         print("OK")
