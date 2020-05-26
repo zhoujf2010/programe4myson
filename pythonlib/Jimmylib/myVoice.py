@@ -34,6 +34,15 @@ class myVoice(object):
         self.energy_threshold =  self.__calcBackVoice()
         self.stream = None
     
+    def getframerate(self):
+        return self.SAMPLE_RATE
+    
+    def getsampwidth(self):
+        return self.SAMPLE_WIDTH
+    
+    def getnchannels(self):
+        return 1
+    
     def __calcBackVoice(self):
         #计算背景音大小
         energy_threshold = 300  # minimum audio energy to consider for recording
