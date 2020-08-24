@@ -4,6 +4,7 @@ Created on 2020年6月27日
 @author: zjf
 '''
 import socket
+import threading
 
 class MyWifi(object):
     '''
@@ -11,12 +12,17 @@ class MyWifi(object):
     '''
 
 
-    def __init__(self, ip,port):
+    def __init__(self, ip,port,reccallback=None):
         self.ip = ip
         self.port = port
         self._inputlst = []
         self._outputlst = []
         self.open()
+        if reccallback != None:
+            self.reccallback = reccallback
+            t = threading.Thread(target=self.resv)
+            self.BUF_SIZE = 1024
+            t.start()
     
     def open(self):
         self.s = socket.socket() 
@@ -24,6 +30,18 @@ class MyWifi(object):
     
     def send(self,msg):
         self.s.send(bytes(msg,'utf-8'))
+        
+    def close(self):
+        self.s.close()
+        
+    def resv(self):
+        try:
+            while True:
+                data = self.s.recv(self.BUF_SIZE)
+                text = data.decode()
+                self.reccallback(text)
+        except :
+            pass
     
     def __sendData(self, cmd, param, pin):
         data = (cmd << 6) | (param << 4) | pin

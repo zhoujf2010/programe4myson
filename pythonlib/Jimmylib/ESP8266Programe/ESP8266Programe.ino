@@ -2,20 +2,20 @@
 #include <Ticker.h>
 
 #define MAX_SRV_CLIENTS 3   //最大同时连接数，即你想要接入的设备数量，8266tcpserver只能接入五个，哎
-WiFiServer server(8266);//你要的端口号，随意修改，范围0-65535
+WiFiServer server(8080);//你要的端口号，随意修改，范围0-65535
 WiFiClient serverClients[MAX_SRV_CLIENTS];
 
 
-const char *ssid     = "qinhh";//这里写入网络的ssid
-const char *password = "58766730";//wifi密码
+const char *ssid     = "Epoint_Tech";//这里写入网络的ssid
+const char *password = "epointtech";//wifi密码
 
-//static const uint8_t LED_Red = 2;
-//static const uint8_t LED_Green = 2;
-//static const uint8_t LED_Reset = 3;
+static const uint8_t LED_Red = 2;
+static const uint8_t LED_Green = 2;
+static const uint8_t LED_Reset = 3;
 
-static const uint8_t LED_Red = 12;
-static const uint8_t LED_Green = 4;
-static const uint8_t LED_Reset = 14;
+//static const uint8_t LED_Red = 12;
+//static const uint8_t LED_Green = 4;
+//static const uint8_t LED_Reset = 14;
 
 
 Ticker flipper;
