@@ -255,6 +255,7 @@ namespace scratch_link
             _filters = newFilters;
             _optionalServices = newOptionalServices;
             _watcher.Received += OnAdvertisementReceived;
+            _watcher.ScanningMode = BluetoothLEScanningMode.Active;
             _watcher.Start();
         }
 
@@ -266,18 +267,19 @@ namespace scratch_link
         private void OnAdvertisementReceived(BluetoothLEAdvertisementWatcher sender,
             BluetoothLEAdvertisementReceivedEventArgs args)
         {
+            Console.WriteLine(args.Advertisement.LocalName + "--" + args.BluetoothAddress);
             if (args.RawSignalStrengthInDBm == -127)
             {
                 // TODO: figure out why we get redundant(?) advertisements with RSSI=-127
                 return;
             }
 
-            if (args.AdvertisementType != BluetoothLEAdvertisementType.ConnectableDirected &&
-                args.AdvertisementType != BluetoothLEAdvertisementType.ConnectableUndirected)
-            {
-                // Advertisement does not indicate that the device can connect
-                return;
-            }
+            //if (args.AdvertisementType != BluetoothLEAdvertisementType.ConnectableDirected &&
+            //    args.AdvertisementType != BluetoothLEAdvertisementType.ConnectableUndirected)
+            //{
+            //    // Advertisement does not indicate that the device can connect
+            //    return;
+            //}
 
             if (!_filters.Any(filter => filter.Matches(args.Advertisement)))
             {

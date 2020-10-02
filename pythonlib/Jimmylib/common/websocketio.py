@@ -21,7 +21,7 @@ class WebSocketIO(object):
     classdocs
     '''
 
-    def __init__(self, msgcallback, addr, name):
+    def __init__(self, msgcallback, addr, name=""):
         self.name = name
         self.ws = ws = websocket.WebSocketApp("ws://localhost:55/scratch/" + addr,
         on_message=self.on_message,
