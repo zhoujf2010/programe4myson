@@ -140,7 +140,8 @@ namespace scratch_link
             switch (method)
             {
                 case "discover":
-                    if (m_peripheralData != null) { 
+                    if (m_peripheralData != null)
+                    {
                         SendRemoteRequest("didDiscoverPeripheral", m_peripheralData);
                         firstconnect = false;
                     }
@@ -169,8 +170,27 @@ namespace scratch_link
                         _peripheral.Dispose();
                     }
                     _cachedCharacteristics.Clear();
-                        //if (firstconnect)
+                    //if (firstconnect)
+
+                    JObject ret = null;
+
+                    try
+                    {
                         await Connect(parameters);
+                        ret = new JObject
+                        {
+                            new JProperty("status", new JValue("OK"))
+                        };
+                    }
+                    catch (Exception e)
+                    {
+                        ret = new JObject
+                        {
+                            new JProperty("status", new JValue("Error")),
+                            new JProperty("message", new JValue(e.Message))
+                        };
+                    }
+                    SendRemoteRequest("connect", ret);
                     await completion(null, null);
                     break;
                 case "write":
@@ -180,8 +200,8 @@ namespace scratch_link
                     await completion(await Read(parameters), null);
                     break;
                 case "startNotifications":
-                   //if (firstconnect)
-                        await StartNotifications(parameters);
+                    //if (firstconnect)
+                    await StartNotifications(parameters);
                     await completion(null, null);
                     break;
                 case "stopNotifications":
@@ -345,9 +365,10 @@ namespace scratch_link
                 });
 
             // clean up resources used by discovery
-            if (_watcher != null) { 
-            _watcher.Stop();
-            _watcher = null;
+            if (_watcher != null)
+            {
+                _watcher.Stop();
+                _watcher = null;
             }
             //_reportedPeripherals.Clear();
             _optionalServices = null;
@@ -372,29 +393,29 @@ namespace scratch_link
         {
             try
             {
-            var buffer = EncodingHelpers.DecodeBuffer(parameters);
-            var endpoint = await GetEndpoint("write request", parameters, GattHelpers.BlockListStatus.ExcludeWrites);
+                var buffer = EncodingHelpers.DecodeBuffer(parameters);
+                var endpoint = await GetEndpoint("write request", parameters, GattHelpers.BlockListStatus.ExcludeWrites);
 
-            //Console.Write(endpoint.AttributeHandle);
-            //Console.Write(" ");
-            //foreach (byte bt in buffer)
-            //    Console.Write(bt + "  ");
-            //Console.WriteLine("");
+                //Console.Write(endpoint.AttributeHandle);
+                //Console.Write(" ");
+                //foreach (byte bt in buffer)
+                //    Console.Write(bt + "  ");
+                //Console.WriteLine("");
 
-            var withResponse = (parameters["withResponse"]?.ToObject<bool>() ?? false) ||
-                !endpoint.CharacteristicProperties.HasFlag(GattCharacteristicProperties.WriteWithoutResponse);
+                var withResponse = (parameters["withResponse"]?.ToObject<bool>() ?? false) ||
+                    !endpoint.CharacteristicProperties.HasFlag(GattCharacteristicProperties.WriteWithoutResponse);
 
-            var result = await endpoint.WriteValueWithResultAsync(buffer.AsBuffer(),
-                withResponse ? GattWriteOption.WriteWithResponse : GattWriteOption.WriteWithoutResponse);
+                var result = await endpoint.WriteValueWithResultAsync(buffer.AsBuffer(),
+                    withResponse ? GattWriteOption.WriteWithResponse : GattWriteOption.WriteWithoutResponse);
 
-            switch (result.Status)
-            {
-                case GattCommunicationStatus.Success:
-                    return buffer.Length;
-                case GattCommunicationStatus.ProtocolError:
-                    throw JsonRpcException.ApplicationError($"Error while attempting to write: {result.Status} {result.ProtocolError}"); // "ProtocolError 3"
-                default:
-                    throw JsonRpcException.ApplicationError($"Error while attempting to write: {result.Status}"); // "Unreachable"
+                switch (result.Status)
+                {
+                    case GattCommunicationStatus.Success:
+                        return buffer.Length;
+                    case GattCommunicationStatus.ProtocolError:
+                        throw JsonRpcException.ApplicationError($"Error while attempting to write: {result.Status} {result.ProtocolError}"); // "ProtocolError 3"
+                    default:
+                        throw JsonRpcException.ApplicationError($"Error while attempting to write: {result.Status}"); // "Unreachable"
                 }
 
             }
@@ -464,12 +485,12 @@ namespace scratch_link
         {
             try
             {
-            var endpoint = await GetEndpoint("startNotifications request", parameters, GattHelpers.BlockListStatus.ExcludeReads);
-            var encoding = parameters.TryGetValue("encoding", out var encodingToken)
-                ? encodingToken?.ToObject<string>() // possibly null and that's OK
-                : "base64";
-            await StartNotifications(endpoint, encoding);
-            oldparameters = parameters;
+                var endpoint = await GetEndpoint("startNotifications request", parameters, GattHelpers.BlockListStatus.ExcludeReads);
+                var encoding = parameters.TryGetValue("encoding", out var encodingToken)
+                    ? encodingToken?.ToObject<string>() // possibly null and that's OK
+                    : "base64";
+                await StartNotifications(endpoint, encoding);
+                oldparameters = parameters;
 
             }
             catch (Exception e)

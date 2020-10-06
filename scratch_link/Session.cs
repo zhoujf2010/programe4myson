@@ -316,6 +316,11 @@ namespace scratch_link
             {
                 await DidReceiveCall(method, parameters, resultHandler);
             }
+            catch(Exception e)
+            {
+                Console.WriteLine("===>" + e.Message);
+                throw e;
+            }
             finally
             {
                 _sessionLock.Release();

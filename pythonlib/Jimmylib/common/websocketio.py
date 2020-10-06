@@ -9,6 +9,7 @@ import time
 import base64
 import sys
 import os
+import psutil   
 
 try:
     import thread
@@ -22,6 +23,11 @@ class WebSocketIO(object):
     '''
 
     def __init__(self, msgcallback, addr, name=""):
+        
+        path = __file__[:__file__.rindex("\\")]
+        if "scratch_link.exe" not in [p.name() for p in  psutil.process_iter()]:
+            os.startfile(path + "\\exe\\scratch_link.exe")
+        
         self.name = name
         self.ws = ws = websocket.WebSocketApp("ws://localhost:55/scratch/" + addr,
         on_message=self.on_message,
@@ -74,8 +80,8 @@ class WebSocketIO(object):
     def on_close(self):
 #         print("### closed ###")
         print("连接器关闭")
-        os._exit(1)
-        sys.exit(1)
+#         os._exit(1)
+#         sys.exit(1)
     
     def on_open(self):
         self.isstarted = True
