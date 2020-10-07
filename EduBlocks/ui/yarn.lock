@@ -467,7 +467,7 @@ chalk@^1.1.0:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-change-case@*, change-case@^3.0.1:
+change-case@*:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/change-case/-/change-case-3.0.1.tgz#ee5f5ad0415ad1ad9e8072cf49cd4cfa7660a554"
   integrity sha1-7l9a0EFa0a2egHLPSc1M+nZgpVQ=
@@ -481,6 +481,30 @@ change-case@*, change-case@^3.0.1:
     lower-case "^1.1.1"
     lower-case-first "^1.0.0"
     no-case "^2.2.0"
+    param-case "^2.1.0"
+    pascal-case "^2.0.0"
+    path-case "^2.1.0"
+    sentence-case "^2.1.0"
+    snake-case "^2.1.0"
+    swap-case "^1.1.0"
+    title-case "^2.1.0"
+    upper-case "^1.1.1"
+    upper-case-first "^1.1.0"
+
+change-case@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/change-case/download/change-case-3.1.0.tgz#0e611b7edc9952df2e8513b27b42de72647dd17e"
+  integrity sha1-DmEbftyZUt8uhROye0LecmR90X4=
+  dependencies:
+    camel-case "^3.0.0"
+    constant-case "^2.0.0"
+    dot-case "^2.1.0"
+    header-case "^1.0.0"
+    is-lower-case "^1.1.0"
+    is-upper-case "^1.1.0"
+    lower-case "^1.1.1"
+    lower-case-first "^1.0.0"
+    no-case "^2.3.2"
     param-case "^2.1.0"
     pascal-case "^2.0.0"
     path-case "^2.1.0"
@@ -934,7 +958,7 @@ fill-range@^2.1.0:
     repeat-element "^1.1.2"
     repeat-string "^1.5.2"
 
-folderify@:
+folderify@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/folderify/download/folderify-1.2.1.tgz#527a6b4be4b19d4a555ccc1b81957589253ac535"
   integrity sha1-UnprS+SxnUpVXMwbgZV1iSU6xTU=
@@ -1542,6 +1566,13 @@ no-case@^2.2.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.1.tgz#7aeba1c73a52184265554b7dc03baf720df80081"
   integrity sha1-euuhxzpSGEJlVUt9wDuvcg34AIE=
+  dependencies:
+    lower-case "^1.1.1"
+
+no-case@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.npm.taobao.org/no-case/download/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"
+  integrity sha1-YLgTOWvjmz8SiKTB7V0efSi0ZKw=
   dependencies:
     lower-case "^1.1.1"
 
