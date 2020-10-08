@@ -960,7 +960,7 @@ fill-range@^2.1.0:
 
 folderify@^1.2.1:
   version "1.2.1"
-  resolved "https://registry.npm.taobao.org/folderify/download/folderify-1.2.1.tgz#527a6b4be4b19d4a555ccc1b81957589253ac535"
+  resolved "https://registry.yarnpkg.com/folderify/-/folderify-1.2.1.tgz#527a6b4be4b19d4a555ccc1b81957589253ac535"
   integrity sha1-UnprS+SxnUpVXMwbgZV1iSU6xTU=
   dependencies:
     brfs "~1.0.2"
