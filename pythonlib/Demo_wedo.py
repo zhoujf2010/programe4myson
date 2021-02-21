@@ -13,15 +13,15 @@ if __name__ == '__main__':
     hub = wedo()
 #     b = arduino()
     # 电机测试
-#     hub.turn_motor(50)
-#     print(1)
-#     time.sleep(4)
-    for i in range(0,100):
-        t = time.time()
-        v = hub.get_object_distance()
-        dt = time.time() - t;
-        print(v,"用时:",dt / 1000.0)#,b.getState(4))
-        time.sleep(0.1)
+    hub.turn_motor(50)
+    print(1)
+    time.sleep(4)
+    # for i in range(0,100):
+    #     t = time.time()
+    #     v = hub.get_object_distance()
+    #     dt = time.time() - t;
+    #     print(v,"用时:",dt / 1000.0)#,b.getState(4))
+    #     time.sleep(0.1)
 #     hub.turn_motor(60)
 #     time.sleep(2)
 #     hub.turn_motor(40)
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 #     time.sleep(2)
 #     hub.turn_motor(-100)
 #     time.sleep(2)
-#     hub.motor_brake()
+    hub.motor_brake()
 
     # 距离传感器
 #     time.sleep(2)
@@ -52,5 +52,5 @@ if __name__ == '__main__':
 #         print(hub.get_object_distance(), '  ', hub.get_tilt())
 #         time.sleep(0.1)
         
-#     hub.disconnect()
+    hub.disconnect()
     

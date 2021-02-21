@@ -8,6 +8,10 @@
 #define SERIAL_TIMEOUT      5
 #endif
 #include <MsTimer2.h>
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,16,2); // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 void setup() {
   Serial.begin(SERIAL_RATE);
@@ -29,6 +33,12 @@ void setup() {
    MsTimer2::set(5, event);
    //开始计时
    MsTimer2::start(); 
+
+   lcd.init(); // initialize the lcd 
+  lcd.backlight(); //Open the backlight
+  lcd.print("xxxx "); // Print a message to the LCD.
+  lcd.setCursor(0,1); //newline
+  lcd.print("www.yfrobot.com");// Print a message to the LCD
 }
 
 int pwrite = 0;
@@ -63,6 +73,8 @@ void loop() {
     return ;
   }
 
+  lcd.setCursor(0,1); //newline
+  lcd.print(v);// Print a message to the LCD
 
   byte cmd = v >> 6 ;  //头两个为命令类型
   byte param = (v & 0x30) >> 4; //高四位中后两位为命令参数
